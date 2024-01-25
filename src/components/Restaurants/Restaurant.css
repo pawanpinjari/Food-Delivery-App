@@ -1,0 +1,339 @@
+.restaurant{
+    /* background-image: url("./Picture/images.jpeg"); */
+    width: 100vw;
+    background-size: cover;
+    background-color: orange;
+
+
+    
+}
+.empty{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background-color: orange;
+}
+.container-add{
+   
+    width: 60%;
+    display: block;
+    padding: 4%;
+    margin-left: 25%;
+     /* margin-top: 5px; */
+    
+}
+.container-add label{
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    margin-left: 15%;
+}
+
+.container-add input,.container-add input[type="text"]{
+    color: black;
+    /* background-color: aliceblue; */
+    width: 70%;
+    margin-left: 15%;
+    border-radius: 5px;
+    margin-top: 0;
+    border: 2px solid black;
+   
+    
+}
+#file{
+    background-color: white;
+}
+.main1 {
+    padding: 2%;
+    background-color: #333;
+}
+.main1 h3{
+    text-align: center;
+    color: yellow;
+    font-weight: bold;
+    font-size: 2rem;
+}
+.rest-main {
+    background-color: #333;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 2%;
+}
+.rest-main form div{
+    display: grid;
+   /* flex-wrap: wrap; */
+   grid-template-columns: 48% 48%;
+   column-gap: 20px;
+}
+.rest-main form div input{
+    margin-right: 5%;
+}
+.rest-main label {
+    display: inline-block;
+    padding: 0 1em;
+    text-align: right;
+    
+  }
+#submit1{
+    margin-top: 5%;
+    margin-left: 50%;
+}
+.rest-main [type=file] {
+    filter: alpha(opacity=0);
+    opacity: 0;
+    display: none;
+
+}
+
+.rest-main [type=file] + label {
+    width: 32vw;
+  text-align: center;
+  left: 7.35em;
+  height: 50px;
+  background: #3399ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.8vw;
+  font-weight: bold;
+  padding: 0.5rem 0.7rem;
+}
+
+.rest-main [type=file] + label:hover {
+  background: #3399ff;
+}
+.all-product{
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;   
+}
+.all-product h1{
+    text-align: center;
+    margin: 50px 0 50px 0;
+    
+}
+.data-disp{
+    width: 50vw;
+    display: grid;
+    grid-template-columns: 20% auto auto;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+}
+.data-name{
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    text-transform: capitalize;
+}
+.data-dec,.data-price{
+    font-size: 15px;
+    font-weight: bold;
+}
+.div-image{
+    text-align: center;
+    background-color: rgb(236, 225, 225);
+}
+.div-data{
+    width: auto;
+    margin-left: 5%;
+}
+.data-image{
+    height: 70px;
+    width: 100%;
+    object-fit: cover;
+}
+.data-button{
+    text-align: end;
+
+}
+.data-button .data-edit{
+    font-size: 2rem;
+    margin-right: 2vw;
+    background-color: none;
+    color: red;
+}
+.data-edit:hover{
+    font-size: 1.8rem;
+    cursor: pointer;
+    
+}
+.data-button .data-delete{
+    font-size: 3rem;
+    margin: 0;
+    background-color: none;
+    color: blueviolet;
+}
+.data-delete:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.cont-rec{
+    margin-top: 60px;
+    position: relative;
+    
+}
+.order-container h3{
+    text-align: center;
+}
+.order-main{
+    display: grid;
+    grid-template-columns: 20% 20% 25% 10% 25%;
+    border: 2px solid black;
+   margin: 1px 5%;
+   font-size: medium;
+   /* background-color:rgb(135, 206, 235); */
+   background-color: white;
+  font-weight: bold;
+
+   
+}
+
+.order-main .center{
+    text-align: center;
+}
+.btn-group{
+    display: inline;
+    text-align: end;
+}
+.btn-group button{
+    margin:5px;
+    padding: 2px 5px;
+    font-weight: bold;
+  
+}
+.btn-group button:hover{
+    padding: 3px 6px;
+}
+.order-image{
+    margin: 2px 5px 0px 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.view{
+    background-color: yellow;
+   
+}
+.confirm{
+    background-color: green;
+}
+.cancel{
+    background-color: red;
+}
+p{
+    text-align: start;
+}
+
+.rec-table table{
+    font-size: 17px;
+    width: 100%;
+   }
+   .rec-table table tr{
+     line-height:30px;
+     border-bottom: 1px solid black;
+     font-weight: bold;
+   }
+   .rec-table table th{
+     background-color: orange;
+     text-align: center;
+   }
+   .rec-table table td{
+     text-align: center;
+   }
+
+   .rec-table .sub-title{
+    text-align: center;
+    font-weight: bold;
+}
+.order-bill{
+    padding-left: 10%;
+   
+}
+.img-cont{
+    text-align: center;
+}
+.title-log{
+    margin-left: 35% ;
+    
+}
+.popup{
+    display: block;
+    height: auto;
+    width: 600px;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Make sure it's above other elements */
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.01); 
+    z-index: 999;
+    backdrop-filter: blur(5px); 
+    
+
+  }
+  .popup-close{
+    color: black;
+    font-size: 25px;
+   position: absolute;
+   right: 1px;
+  }
+  .btn-popup{
+    display: inline;
+   text-align: end;
+}
+.btn-popup button{
+    margin:5px;
+    padding: 2px 5px;
+    font-weight: bold;
+  
+}
+.print-data {
+    font-size: 20px;
+    margin: 1%;
+    padding: 1%;
+    border: 3px solid black;
+    width: 98%;
+}
+.bill-title{
+    text-align: center;
+    border-bottom: 3px solid black;
+}
+.bill-title h1{
+    font-weight: bold;
+    font-size: 40px;
+}
+.order-details,.bill-details{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-bottom: 3px solid black;
+}
+.bill-details h3{
+    font-weight: bold;
+    text-align: center;
+}
+.items h3{
+    text-align: center;
+    font-weight: bold;
+}
+.items table{
+    width: 90%;
+    margin-left: 5%;
+}
+.items table tr{
+    border: 3px solid black;
+}
+.items table th,.items table td{
+    text-align: center;
+}
+.footer p{
+    text-align: center;
+}
