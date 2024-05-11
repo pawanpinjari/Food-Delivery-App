@@ -24,15 +24,15 @@ const newSchema=new mongoose.Schema({
     },
     mobile:{
         type : Number,
-        // required:true
+       
     },
     image:{
         type:String,
-        // required:true
+
     },
     password:{
         type:String,
-        // required:true
+        
     }
 })
 

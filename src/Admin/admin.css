@@ -1,0 +1,171 @@
+.admin-nav{
+  position: fixed;
+  width: 100vw;
+    height: 10vh;
+    background-color: #111;
+  align-items: center;
+  /* justify-content: center; */
+    display: flex;
+    color: white;
+    font-weight: bold;
+}
+.admin-home{
+
+  display: grid;
+  grid-template-columns: 20vw 80vw;
+
+}
+.admin-box{
+  margin-top: 10vh;
+}
+.admin-nav div:first-child{
+  align-items: start;
+}
+.admin-nav div{
+    margin-top: -5px;
+    font-size: 40px;
+    justify-content: center;
+   width: 90%;
+}
+.admin-box{
+  
+  top: 10vh;
+}
+.sidebar{
+  position: fixed;
+  top: 10vh;
+  background-color: #211f1f;
+  width: 20vw;
+ height: 100vh;
+ /* padding:20px 20px; */
+}
+.sidebar1{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: black;
+}
+.sidebar li,.sidebar1 li{
+  display: block !important;
+  text-align: start;
+  padding:15px 10px !important;
+  font-size: 18px;
+  background-color: #1111;
+  color: white;
+  border-bottom: 1px solid white;
+
+}
+body {
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 90vh;
+    width: 80vw;
+
+  }
+  
+
+  .dashboard-box {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 60%; 
+    width: 100%;
+  }
+  
+
+  .dashboard-box h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .dashboard-sub-box {
+    display: grid;
+    margin-top: 5%;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .sub-box-item {
+  
+    height: 90px;
+    background-color: #e5d308;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+.sub-box-item li{
+    display:block;
+    padding: 0;
+    text-align: center;
+color: black;
+  }
+  .sub-box-item li:last-child{
+    font-size: 12px;
+  }
+ .comp-box div{
+    width: 35%;
+    font-size: 20px;
+    font-weight: bold;
+    gap: 20px;
+  }
+ 
+  .canvas{
+    width: 95% !important;
+    font-size: 2px !important;
+   
+  }
+.order-container{
+  width: 90%;
+  margin:2% 5%;
+}
+.cell-data{
+  color: red !important;
+  /* font-size: 13px !important; */
+  font-weight: bold !important;
+}
+  @media screen and (max-width:500px){
+    .none{
+      display: none;
+    }
+    .admin-home{
+      grid-template-columns: auto;
+    }
+    .sidebar{
+      display: none;
+    }
+    .sidebar1 li{
+      text-align: center;
+    }
+    .admin-nav{
+      height: 7vh;
+    }
+    .dashboard{
+      margin-top: 10vh;
+      width: 100vw;
+    }
+    .dashboard-box{
+      max-width: 90%;
+    }
+    .canvas{
+      height: 35vh !important;
+    }
+    .order-container{
+      width: 100%;
+      margin: 0;
+    }
+  }

@@ -1,0 +1,9 @@
+.comp-box{
+    display: flex;
+    width: 90%;
+    margin: 1% 5% 1% 5%;
+    padding: 20px;
+    background-color: rgb(207, 245, 68);
+   align-content: center; 
+
+}

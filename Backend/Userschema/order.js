@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const itemSchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   name: String,
   price: String,
   image: String,
@@ -41,16 +41,23 @@ const paymentSchema = new mongoose.Schema({
   card_number: String,
   card_expMonth: String,
   card_expYear: String,
-  card_cvv: String
+  card_cvv: String,
+  orderDate: {
+    type: Date,
+    default: function() {
+      const indianTimeOffset = 5.5 * 60 * 60 * 1000;
+      return new Date(Date.now() + indianTimeOffset);
+    }
+  }
 });
 
 const orderSchema = new mongoose.Schema({
-  restName: String,
-  status:String,
-  LogData: [userSchema],
+  restId: String,
+  custId: String,
   cart_data: [itemSchema],
   bill_address: addressSchema,
-  payment: paymentSchema
+  payment: paymentSchema,
+  status:String
 });
 
 const order = mongoose.model('Order', orderSchema);
