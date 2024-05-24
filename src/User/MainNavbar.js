@@ -1,7 +1,6 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser, setToken, setLoginStatus } from '../Redux/Actions/index';
+import { useSelector } from 'react-redux';
 import { HiX } from 'react-icons/hi';
 import './MainNavbar.css';
 import axios from "axios"
@@ -9,12 +8,12 @@ import Profile from '../Components/Profile';
 import { BsFillCartPlusFill } from 'react-icons/bs';
 
 const MainNavbar = (props ) => {
-  const dispatch=useDispatch()
   const history = useNavigate();
   const navigate = useNavigate();
   const userData = useSelector(state => state.user);
   const loginStatus = useSelector(state => state.isLoggedIn);
   const restId = useSelector(state => state.restId);
+  const [profileEdit, setProfileEdit] = useState(false);
 
   const [view, setView] = useState(false);
   const [email, setEmail] = useState("");
@@ -25,8 +24,18 @@ const MainNavbar = (props ) => {
   useEffect(() => {
 
     if (Array.isArray(userData)) {
-      userData.map((e) => setImage(e.image));
+      const images = [];
+      const emails = [];
+    
+      userData.forEach((e) => {
+        images.push(e.image);
+        emails.push(e.email);
+      });
+    
+      setImage(images);
+      setEmail(emails);
     }
+    
   }, [userData]);
 
   const profile = () => {
@@ -34,19 +43,65 @@ const MainNavbar = (props ) => {
 
 
   };
+  const profile_edit=()=>{
+    setProfileEdit(true)
+   
+  }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      
+    };
+    reader.readAsDataURL(file);
+  };
 
+
+  async function submit(e){
+    e.preventDefault();
+    console.log(userData)
+    const formData = new FormData();
+    formData.append('image', image);
+     formData.append('email', email);
+     formData.append('addr', addr);
+     console.log("formData",formData)
+    try{
+
+        await axios.post(`${process.env.REACT_APP_API_URL}/user_update`,{
+          image,email,addr
+        })
+        .then(res=>{
+            if(res.data==="exist"){
+              alert("User have not sign up")
+            }
+            else if(res.data){
+              history("/",{state:res.data}) 
+            }
+        })
+        .catch(e=>{
+            alert("wrong details")
+            console.log(e);
+        })
+
+    }
+    catch(e){
+        console.log(e);
+
+    }
+    
+}
  const Cart =()=>{
 
   const state = {
     restId: restId,
 };
-  if(loginStatus==true){
-    navigate("/cart", { state: state })
-
-  }
-  else{
-    alert("Login First")
-  }
+if (loginStatus === true) {
+  navigate('/cart', { state: state });
+} else {
+  
+  navigate('/login', { state:  { from: "cart" } });
+}
  }
   return (
     <>
@@ -71,7 +126,7 @@ const MainNavbar = (props ) => {
               
               {
                 image ? (
-                  <img src={`./images/${image}`} onClick={profile} alt="profile" className='icon' />
+                  <img src={image} onClick={profile} alt="profile" className='icon' />
 
                 ) : (
                   <img src="./owner/profile.png" alt='icon' onClick={profile} className='icon' />
@@ -88,6 +143,10 @@ const MainNavbar = (props ) => {
 
         <div className="profile-data">
           <HiX className="icon x" onClick={() => setView(false)} /> <br />
+          {
+            loginStatus &&
+            <h5 onClick={() => { profile_edit(); }} className='edit'>edit profile</h5>
+          }
           <Profile></Profile>
 
           {/* {loginStatus ? (
@@ -160,7 +219,7 @@ const MainNavbar = (props ) => {
           )} */}
         </div>
       )}
-      {/* {
+      {
         profileEdit && <div className="profile-data">
           <HiX className="icon x" onClick={() => setProfileEdit(false)} /> <br />
           {
@@ -168,7 +227,7 @@ const MainNavbar = (props ) => {
             <div className='editable'>
               <form >
                 <text><h4 className='first-span'>profile image</h4>
-                  <input type="file" name="" id="" onChange={(e) => { setImage(e.target.files[0]) }} />
+                  <input type="file" name="" id="" onChange={handleImageChange} />
                 </text>
                 <text><h4 className='first-span'>Address</h4>
                   <input type="text" onChange={(e) => { setAddr(e.target.value) }} name="" id="" />
@@ -180,7 +239,7 @@ const MainNavbar = (props ) => {
           }
 
         </div>
-      } */}
+      }
     </>
   );
 };

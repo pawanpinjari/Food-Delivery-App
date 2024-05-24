@@ -2,20 +2,23 @@ import React from 'react'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaLocationDot } from "react-icons/fa6";
-import { setRest,setCart} from '../Redux/Actions/index';
+import { setRest,deleteAll} from '../Redux/Actions/index';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Restaurants = ({ menuData}) => {
     const dispatch = useDispatch();
     const history = useNavigate();
     const restId = useSelector(state => state.restId);
+
+    const topRest=menuData.slice(0,10)
+    
     const onAlert = (id) => {
         if(restId==null){
             dispatch(setRest(id))
             history("/menuData",{state:{id}})
         }
-        else if(restId!=id){
-            dispatch(setCart(null))
+        else if(restId!==id){
+            dispatch(deleteAll());
             dispatch(setRest(id))
             history("/menuData",{state:{id}})
         }
@@ -30,14 +33,14 @@ const Restaurants = ({ menuData}) => {
             <hr />
                 <h2 className='h1-container'>Top Retaurants in Pune</h2> 
                 <div className=' top-rest'>
-                    {menuData.map((curData, i) => {
+                    {topRest.map((curData, i) => {
                         const { _id, name, image, addr } = curData;
                         return (
                             <div key={i} onClick={() => { onAlert(_id) }}>
                                 <div className='card1 ' >
                                     <div >
                                         {/* <img src= {image} alt="images" className='card-media' /> */}
-                                        <img src={`./images/${image}`} alt="images" className='card-media' />
+                                        <img src={`${image}`} alt="images" className='card-media' />
                                     </div>
                                     <div className='card-body'>
                                         <div className='card-title'> {name}</div>
@@ -62,7 +65,7 @@ const Restaurants = ({ menuData}) => {
                                 <div className='card' >
                                     <div >
                                         {/* <img src={image} alt="images" className='card-media' /> */}
-                                        <img src={`./images/${image}`} alt="images" className='card-media' />
+                                        <img src={`${image}`} alt="images" className='card-media' />
                                     </div>
                                     <div className='card-body'>
                                         <div className='card-title'> {name}</div>

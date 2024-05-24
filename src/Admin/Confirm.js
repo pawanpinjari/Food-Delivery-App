@@ -1,32 +1,4 @@
-// import React from 'react'
-// import DataView from '../Components/DataView'
-
-// const Confirm = ({ConfOrder}) => {
-//   console.log("ConfOrder",ConfOrder)
-//   return (
-//     <div>
-//        {ConfOrder.map((data, index) => (
-//         <DataView key={index}>
-//        {data.bill_address && (
-//             <>
-//               <div>{data.bill_address.name}</div>
-//               <div>{data.bill_address.address +" "+ data.bill_address.city}</div>
-//               <div>{data.bill_address.mobile}</div>
-//             </>
-//           )}
-//            {data.payment && (
-//             <div>{data.payment.total}</div>
-//           )}
-          
-//          </DataView>
-//       ))}
-//     </div>
-//   )
-// }
-
-// export default Confirm
-
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -36,12 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+
 
 const Confirm = ({ ConfOrder }) => {
-  console.log("ConfOrder",ConfOrder)
+  console.log(ConfOrder)
+
   return (
     <React.Fragment>
       <div className='order-container'>

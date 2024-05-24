@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-const SET_CART = 'SET_CART';
+// const SET_CART = 'SET_CART';
 const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
-const DELETE_ITEM = 'DELETE_ITEM'; 
+// const DELETE_ITEM = 'DELETE_ITEM'; 
 const initialState = {
   user: null,
   restId: null,
@@ -76,6 +76,8 @@ const cartReducer = (state = initialState.cart, action) => {
         return updatedDec;
       }
       return state;
+      case 'DELETE_ALL':
+        return [];
       case 'DELETE_ITEM':
         const itemIndex = state.findIndex(item => item.id === action.payload.id);
         if (itemIndex !== -1) {

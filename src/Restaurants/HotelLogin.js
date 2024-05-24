@@ -13,7 +13,7 @@ const HotelLogin = () => {
         e.preventDefault();
         try{
 
-            await axios.post("http://localhost:8000/rest_login",{
+            await axios.post(`${process.env.REACT_APP_API_URL}/rest_login`,{
                 email,password
             })
             .then(res=>{

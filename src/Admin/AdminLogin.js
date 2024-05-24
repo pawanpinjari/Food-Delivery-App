@@ -12,7 +12,7 @@ const AdminLogin = () => {
     async function submit(e){
         e.preventDefault(); 
        
-        if (email === 'pawanpinjari21@gmail.com' && password === 'Pawan@1234') {
+        if(email === process.env.REACT_APP_ADMIN_EMAIL && password === process.env.REACT_APP_ADMIN_PASS) {
             dispatch(setLoginStatus(true));
             history('/admin');
         } else {

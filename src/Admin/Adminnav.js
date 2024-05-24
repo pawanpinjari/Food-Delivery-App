@@ -5,7 +5,6 @@ import { HiX } from 'react-icons/hi';
 
 const Adminnav = (props) => {
   const [view, setView] = useState(false);
-  const [data, setData] = useState("");
 
   const viewHandler = () => {
     setView(!view);

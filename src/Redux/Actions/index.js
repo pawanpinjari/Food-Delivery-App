@@ -1,5 +1,6 @@
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
+export const DELETE_ALL = 'DELETE_ALL';
 export const SET_CART = 'SET_CART';
 export const setUser = (user) => ({
     type: 'SET_USER',
@@ -46,7 +47,11 @@ export const setUser = (user) => ({
       },
     };
   };
-  
+  export const deleteAll = () => {
+    return {
+      type: DELETE_ALL
+    };
+  };
   export const dec_Qty = (id) => {
     return {
       type: DECREASE_QUANTITY,

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,12 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+
 
 const Received = ({ RecOrder }) => {
-  console.log(RecOrder)
+
   return (
     <React.Fragment>
       <div className='order-container'>

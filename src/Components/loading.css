@@ -1,0 +1,12 @@
+.loading-box{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+   
+}
+
+.loading{
+width: 100px !important;
+height: 100px !important;
+}

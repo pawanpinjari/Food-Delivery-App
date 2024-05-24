@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { HiX } from 'react-icons/hi';
 import { HiOutlineMenu } from "react-icons/hi";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Profile from '../Components/Profile';
 
 const NavRest = (props) => {
 
   const logData = useSelector(state => state.user);
-  const login = useSelector(state => state.isLoggedIn);
 
   const [image, setImage] = useState("")
   const [view, setView] = useState(false)
@@ -39,7 +38,7 @@ const NavRest = (props) => {
         <div className="user">
           {
             image ? (
-              <img src={`./images/${image}`} onClick={profile} alt="profile" className='icon' />
+              <img src={`${image}`} onClick={profile} alt="profile" className='icon' />
 
             ) : (
               <img src="./owner/profile.png" alt='icon' onClick={profile} className='icon' />

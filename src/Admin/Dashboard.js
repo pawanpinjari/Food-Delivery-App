@@ -13,6 +13,7 @@ const Dashboard = (props) => {
     }
     
   });
+  console.log(props.data)
   let result = Math.floor(totalPayment);
   setTotal(result)
 };
@@ -32,14 +33,15 @@ setTimeout(()=>{
           <div className="dashboard-box">
             <h3>Order statistics</h3>
             <div className="dashboard-sub-box" >
-              <div className="sub-box-item" onClick={()=>props.navContent("restaurants")}>
-                <li>Restaurant</li>
-                <li>{allData.restaurants.length}</li>
-                <li>View all</li>
-              </div>
+              
               <div className="sub-box-item" onClick={()=>props.navContent("users")}>
                 <li>Users</li>
                 <li>{allData.users.length}</li>
+                <li>View all</li>
+              </div>
+              <div className="sub-box-item" onClick={()=>props.navContent("restaurants")}>
+                <li>Restaurant</li>
+                <li>{allData.restaurants.length}</li>
                 <li>View all</li>
               </div>
               <div className="sub-box-item" onClick={()=>props.navContent("earnings")}>

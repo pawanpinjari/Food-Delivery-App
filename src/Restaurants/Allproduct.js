@@ -2,15 +2,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import "./Restaurant.css"
 import { AiFillDelete } from 'react-icons/ai';
-import { GrEdit } from 'react-icons/gr';
 import { BiRupee } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
+import Loading from '../Components/Loading';
 const Allproduct = (props) => {
     const[data,setData]=useState("")
     const token = useSelector(state => state.token);
     useEffect(() => {
       try {
-          axios.post("http://localhost:8000/allfood", {}, {
+          axios.post(`${process.env.REACT_APP_API_URL}/allfood`, {}, {
               headers: {
                   Authorization: `Bearer ${token}`
               }
@@ -38,10 +38,10 @@ const Allproduct = (props) => {
      
       try{
 
-        await axios.post("http://localhost:8000/foodDelete",{id})
+        await axios.post(`${process.env.REACT_APP_API_URL}/foodDelete`,{id})
         .then(res=>{
           
-            if(res.data=="exit"){
+            if(res.data==="exit"){
               alert("Delete successfully")
             }
             else if(res.data==="notexist"){
@@ -85,7 +85,8 @@ const Allproduct = (props) => {
             ))
           ):(
             <div>
-              <h1>Add Food First</h1>
+               <div className='admin-loading'><Loading /></div> 
+               
             </div>
           )
          }

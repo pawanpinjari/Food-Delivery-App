@@ -1,27 +1,4 @@
-// import React from 'react';
-// import DataView from '../Components/DataView';
-
-// const Users = ({ UserData }) => {
-//   console.log("user", UserData);
-
-//   return (
-//     <div>
-//       <div className='userdata'>
-//         {UserData.map((data, index) => (
-//           <DataView key={index}>
-//             <div>{data.name}</div>
-//             <div>{data.email}</div>
-//             <div>{data.mobile}</div>
-//           </DataView>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Users;
-
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -31,20 +8,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 const Users = ({ UserData }) => {
   // console.log(RecOrder)
   return (
     <React.Fragment>
       <div className='order-container'>
-      
         <Typography component="h2" variant="h5" color="primary" fontWeight="bold" align='center' gutterBottom>
           All Users
         </Typography>
        
+      <Paper >
         <Table size="medium">
           <TableHead>
             <TableRow >
@@ -67,7 +41,7 @@ const Users = ({ UserData }) => {
             ))}
           </TableBody>
         </Table>
-     
+     </Paper>
       </div>
     </React.Fragment>
   )

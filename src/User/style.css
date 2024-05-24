@@ -37,7 +37,7 @@ html {
 
 .menu-side {
   min-height: 90vh;
-  width: 20vw;
+  width: 100%;
   color: white;
   background-color: #111;
 }
@@ -45,7 +45,7 @@ html {
 .menu-container {
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  gap: 50px;
+  gap: 2vw;
   align-items: center;
   justify-content: center;
   width: 90%;
@@ -120,7 +120,9 @@ html {
   box-shadow: 0 0 5px rgba(75, 75, 75, 0.07);
   z-index: 1;
 }
-
+.card:hover,.card1:hover,.card-menu:hover{
+ background-color: #f2ebeb;
+}
 .card-body {
   display: grid;
   grid-template-columns: auto auto;
@@ -257,7 +259,9 @@ text-align: end;
   color: red;
 
 }
-
+.home-container{
+  min-height: 100vh;
+}
 .home-main {
   width: 100%;
   position: absolute;
@@ -265,6 +269,7 @@ text-align: end;
   color: white;
   z-index: 1;
   text-align: center;
+ 
 }
 
 .home-main h1 {
@@ -325,6 +330,7 @@ text-align: end;
   align-items: center;
   margin-top: 65px;
   font-size: 15px;
+  min-height: 100vh;
 }
 
 .cart-container table {
@@ -381,9 +387,49 @@ text-align: end;
   background-color: green;
   font-weight: bold;
 }
-
-@media screen and (min-width: 900px) {
-
+.pay-container{
+  padding-top: 12vh;
+  min-height: 100vh;
+  display: grid;
+  justify-content: center;
+  background: #34495e;
+}
+.pay-container .column {
+  width: 40vw;
+  
+}
+.pay-container .text{
+ 
+  font-size:20px !important;
+  color: yellow;
+}
+.pay-container .button-area{
+  margin-top: 3vh;
+}
+@media screen and (max-width: 900px) and (min-width: 500px) {
+.home-poster{
+  height: 35vh;
+}
+.card1 {
+  width: 35vw;
+}
+.home-main{
+  margin-top: 20%;
+}
+.menu-box{
+  margin-top: 7vh;
+  min-height:93vh;
+  grid-template-columns: 30vw 70vw;
+}
+.main-card--container{
+  grid-template-columns: auto auto;
+}
+.menu-container{
+  grid-template-columns: auto auto;
+}
+.navbar-content div{
+  width: 30vw;
+}
   .main-card--cointainer {
     display: block;
 
@@ -392,9 +438,14 @@ text-align: end;
 }
 
 @media screen and (max-width: 500px) {
+  .pay-container .column {
+    width: 100vw;
+  padding: 10%;
+  }
 .menu-box{
-  grid-template-columns: 100%;
+  grid-template-columns: 100vw;
   margin-top: 0;
+ 
 }
 
 
@@ -405,7 +456,7 @@ text-align: end;
   }
 
   .home-main {
-    margin-top: 20%;
+    margin-top: 25%;
 
   }
 
@@ -513,6 +564,8 @@ text-align: end;
 
   .menu-container{
     grid-template-columns: auto;
+    width: 80%;
+    margin: 10%;
   }
 
   .card-menu {
@@ -537,7 +590,7 @@ text-align: end;
 
 
   .home-poster {
-    height: 30vh;
+    height: 35vh;
   }
 
   .home-main h1 {

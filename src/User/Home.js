@@ -1,52 +1,61 @@
-import React, { Fragment, useEffect, useReducer, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react'
 import "./style.css"
 import MainNavbar from './MainNavbar';
 import axios from "axios"
 import Restaurants from './Restaurants';
-import Navbar from '../Components/Navbar';
+import Footer from '../Footer';
+import Loading from '../Components/Loading';
 
 const Home = ({ price }) => {
   const [apiData, setapiData] = useState([])
-  const [login, setLogin] = useState(false)
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios.post("http://localhost:8000/home")
-      .then(res => {
-        if (res.data) {
-          let data = res.data;
-         
-          setapiData(data);
-
-        } else if (res.data === "notexist") {
-          alert("User has not signed up");
+ 
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/home`);
+        if (response.data) {
+          setapiData(response.data);
+        } else {
+          alert("data not found");
         }
-      })
-      .catch(e => {
-        alert("");
-        alert("wrong details")
-      });
+      } catch (error) {
+        alert("Something went wrong while fetching admin data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <>
-    {/* <Navbar></Navbar> */}
-      <MainNavbar  />
+
+      <MainNavbar />
       <div className='home-container'>
-        <div className='home-main'>
-          <h1>Sweetly</h1>
-          <h2>Order Your Favourite Foods...</h2>
-          <div>
-            <a href="#data">Order Now</a>
+        <div>
+          <div className='home-main'>
+            <h1>Sweetly</h1>
+            <h2>Order Your Favourite Foods...</h2>
+            <div>
+              <a href="#data">Order Now</a>
+            </div>
           </div>
+          <img src="./images/poster2.png" alt="" className='home-poster' />
         </div>
-        <img src="./images/poster2.png" alt="" className='home-poster' />
+        <section id='data'>
+
+         {
+           loading ?  <div className='admin-loading'><Loading /></div> :<Restaurants menuData={apiData} /> 
+          
+           
+        } 
+        </section>
       </div>
 
-      <section id='data'>
 
-        <Restaurants menuData={apiData}/>
-      </section>
+      <Footer />
     </>
   );
 };

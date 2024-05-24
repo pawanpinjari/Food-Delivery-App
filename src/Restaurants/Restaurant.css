@@ -5,18 +5,18 @@
     min-height: 100vh;
    
 }
-.empty{
+/* .empty{
     height: 100vh;
     width: 100vw;
     position: fixed;
     background-color: orange;
-}
+} */
 .container-add{
    
-    width: 60%;
-    display: block;
-    padding: 4%;
-    margin-left: 25%;
+    width: 100vw;
+    display: grid;
+    margin-top: 7vh;
+    justify-content: center;
     
 }
 .container-add label{
@@ -42,7 +42,8 @@
     background-color: white;
 }
 .main1 {
-    padding: 2%;
+    width: 60vw;
+    
     background-color: #333;
 }
 .main1 h3{
@@ -100,9 +101,12 @@ width: 32vw;
   background: #3399ff;
 }
 .all-product{
-    margin-top: 5%;
-    margin-left: 25%;
-    width: 50%;   
+    
+    width: 100%;  
+    display: grid; 
+    justify-content: center;
+    top: 10vh;
+    position: relative;
 }
 .all-product h1{
     text-align: center;
@@ -110,11 +114,12 @@ width: 32vw;
     
 }
 .data-disp{
-    width: 100%;
+    width: 50vw;
     display: grid;
     grid-template-columns: 20% auto auto;
     margin-bottom: 20px;
     background-color: aliceblue;
+   
 }
 .data-name{
     font-size: 20px;
@@ -166,8 +171,8 @@ width: 32vw;
 }
 
 .cont-rec{
-    margin-top: 60px;
     position: relative;
+    top: 7vh;
     
 }
 .order-container h3{
@@ -198,7 +203,7 @@ text-align: center;
     text-align: center;
 }
 .btn-group{
-    display: inline;
+    display: flex;
     text-align: end;
 }
 .btn-group button{
@@ -256,10 +261,7 @@ text-align: center;
 .img-cont{
     text-align: center;
 }
-.title-log{
-    margin-left: 35% ;
-    
-}
+
 .popup{
     display: block;
     height: auto;
@@ -355,9 +357,43 @@ text-align: center;
 li:hover{
     cursor: pointer;
 }
+@media screen and (max-width: 900px) and (min-width: 500px){
+    .nav-main li{
+        display: none;
+    }
+    .menu-icon{
+        display: block;
+        color: white;
+        margin: 8px;
+        font-size: 30px;
+    }
+    .order-main{
+        grid-template-columns: 60% 40%;
+    }
+   
+    
+    .menu-item{
+        margin-top: 10% !important;
+       
+    }
+    .menu-item li{
+        text-align: center;
+        color: white;
+        display: block;
+        font-size:25px;
+  
+    }
+    .data-disp{
+        width: 70vw;
+    }
+}
+
 @media screen and (max-width:500px) {
-    .all-product ,.container-add{
+    .container-add{
         padding-top: 20%;
+    }
+    .cont-rec{
+        margin-top: 7vh;
     }
     .menu-icon{
         display: block;
@@ -430,6 +466,12 @@ li:hover{
     }
     .popup-title{
         margin-left: 0;
+    }
+    .main1{
+        width: 100%;
+    }
+    .data-disp{
+        width: 90vw;
     }
 }
 

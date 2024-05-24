@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import "./Restaurant.css"
 import axios from 'axios'
-import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
 const Addproduct = (props) => {
-  const history=useNavigate();
   const token = useSelector(state => state.token);
   const[name,setName]=useState('')
   const[price,setPrice]=useState('')
@@ -15,15 +13,16 @@ const Addproduct = (props) => {
 
   async function submit(e) {
     e.preventDefault();
-  
+
     try {
-      const res = await axios.post("http://localhost:8000/add-food", {name,price,category,dec,image}, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/add-food`, {name,price,category,dec,image}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      alert(res.data);
+      
       if (res.data) {
+        
         alert("added successfully");
       } else if (res.data === "notexist") {
         alert("something Wrong");

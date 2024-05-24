@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser, setToken, setLoginStatus } from '../Redux/Actions/index';
+import { setUser, setToken, setLoginStatus,deleteAll,setRest } from '../Redux/Actions/index';
 
 const Profile = () => {
     const dispatch = useDispatch()
@@ -27,6 +27,8 @@ const Profile = () => {
         dispatch(setUser(null));
         dispatch(setToken(null));
         dispatch(setLoginStatus(false));
+        dispatch(deleteAll());
+        dispatch(setRest(null));
         setImage("")
         history("/")
     }
@@ -41,7 +43,7 @@ const Profile = () => {
                                 {
                                     image ? (
                                         <text>
-                                            <img src={`./images/${image}`} className='profile-image' alt="data" /> <br />
+                                            <img src={image} className='profile-image' alt="data" /> <br />
 
                                         </text>
 

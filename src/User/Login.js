@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import './User.css';
 import axios from "axios"
 import { setUser, setToken, setLoginStatus } from '../Redux/Actions/index';
 
-const Login = () => {
+const Login = (props) => {
+    const location = useLocation();
+    const fromPage = location.state?.from;
+
     const dispatch = useDispatch();
     const history = useNavigate();
     const [email, setEmail] = useState(' ');
@@ -14,7 +18,7 @@ const Login = () => {
         e.preventDefault();
         try {
 
-            await axios.post("http://localhost:8000/login", {
+            await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
                 email, password
             })
                 .then(res => {
@@ -22,12 +26,19 @@ const Login = () => {
                     const user = [data.user]
 
                     if (res.data) {
+                       
                         dispatch(setUser(user));
                         dispatch(setToken(data.token));
                         dispatch(setLoginStatus(true));
-                        history("/")
+                        if(fromPage){
+                        
+                            history(`/${fromPage}`)
+                        }else{
+
+                            history("/")
+                        }
                     }
-                    else if (res.data == "notexist") {
+                    else if (res.data === "notexist") {
                         alert("User have not sign up")
                     }
                 })

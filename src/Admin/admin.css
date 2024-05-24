@@ -138,6 +138,14 @@ color: black;
   /* font-size: 13px !important; */
   font-weight: bold !important;
 }
+.admin-loading{
+  height: 90vh;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
   @media screen and (max-width:500px){
     .none{
       display: none;

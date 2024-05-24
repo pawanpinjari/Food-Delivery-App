@@ -37,11 +37,9 @@ const itemSchema = new mongoose.Schema({
 
 const paymentSchema = new mongoose.Schema({
   total: Number,
-  card_holder: String,
-  card_number: String,
-  card_expMonth: String,
-  card_expYear: String,
-  card_cvv: String,
+  paymentID:String,
+  orderID:String,
+  signature:String,
   orderDate: {
     type: Date,
     default: function() {

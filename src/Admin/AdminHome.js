@@ -10,60 +10,61 @@ import AllRest from './AllRest';
 import axios from 'axios';
 import Sidebar from './Sidebar';
 
+import Loading from '../Components/Loading';
 const AdminHome = () => {
   const [navCon, setNavCon] = useState("dashboard");
-  const [Data, setData] = useState()
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      axios.post("http://localhost:8000/admin")
-        .then(res => {
-          if (res.data) {
-            setData(res.data);
-            console.log("data", res.data)
-          } else {
-            console.log("data not found");
-          }
-        })
-        .catch(error => {
-    
-          alert("Something went wrong while fetching admin data");
-        });
-    } catch (error) {
-   
-      alert("Something went wrong");
-    }
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/admin`);
+        if (response.data) {
+          setData(response.data);
+        } else {
+          console.log("data not found");
+        }
+      } catch (error) {
+        alert("Something went wrong while fetching admin data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-
   const navContent = (navContent) => {
-
     setNavCon(navContent);
   }
 
+
+
   return (
-    <div >
+    <div>
       <div>
         <Adminnav navContent={navContent} />
       </div>
       <div className='admin-home'>
         <div>
-          <Sidebar navContent={navContent}/>
+          <Sidebar navContent={navContent} />
         </div>
         <div className='admin-box'>
+
           {
-
-            navCon === "users" ? (<Users UserData={Data.users} />) :
-              navCon === "restaurants" ? (<AllRest RestData={Data.restaurants}/>) :
-                navCon === "earnings" ? (<Earings ConfOrder={Data.confirmedOrders}/>) :
-                  navCon === "received" ? (<Received RecOrder={Data.receivedOrders}/>) :
-                    navCon === "confirm" ? (<Confirm ConfOrder={Data.confirmedOrders} />) :
-                      navCon === "cancelled" ? (<Cancelled ConcOrder={Data.cancelledOrders} />) : (<Dashboard navContent={navContent} data={Data} />)
-          }
-
+            loading ?  (<div className='admin-loading'><Loading/></div> ):
+          data ?( navCon === "users" ? (<Users UserData={data.users} />) :
+              navCon === "restaurants" ? (<AllRest RestData={data.restaurants} />) :
+                navCon === "earnings" ? (<Earings ConfOrder={data.confirmedOrders} />) :
+                  navCon === "received" ? (<Received RecOrder={data.receivedOrders} />) :
+                    navCon === "confirm" ? (<Confirm ConfOrder={data.confirmedOrders} />) :
+                      navCon === "cancelled" ? (<Cancelled ConcOrder={data.cancelledOrders} />) : 
+                      (<Dashboard navContent={navContent} data={data} />)
+          ):(<div>data not found</div>)
+        }
         </div>
       </div>
-
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState  } from 'react'
 import { useNavigate } from'react-router';
 import axios from "axios"
-import { AiFillFileImage, FillFileImage } from 'react-icons/ai';
+import { AiFillFileImage } from 'react-icons/ai';
 
 const HotelSignup = () => {
   const history=useNavigate();
@@ -20,7 +20,7 @@ const HotelSignup = () => {
  
       try{
 
-          await axios.post("http://localhost:8000/rest_signup",{name,email,addr,mobile,password,image,city,desc})
+          await axios.post(`${process.env.REACT_APP_API_URL}/rest_signup`,{name,email,addr,mobile,password,image,city,desc})
           .then(res=>{
             const data=res.data;
               if(res.data==="exist"){

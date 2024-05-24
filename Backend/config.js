@@ -1,10 +1,14 @@
 const mongoose=require("mongoose")
-mongoose.connect("mongodb://0.0.0.0:27017/hotelmenu")
+require('dotenv').config();
+const URL=process.env.MONGO_URL;
+
+mongoose.connect(URL)
 .then(()=>{
     console.log("mongodb connected");
 })
-.catch(()=>{
-    console.log('failed');
+.catch((e)=>{
+    console.log('failed',e);
 })
 
 module.exports=mongoose
+

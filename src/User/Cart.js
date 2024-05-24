@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import MenuCard from './MenuCard'
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import MainNavbar from './MainNavbar'
 import "./style.css"
 import { AiFillDelete } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { dec_Qty, deleteItem , inc_Qty } from '../Redux/Actions'
+import Footer from '../Footer'
 
 const Cart = (props) => {
   const dispatch = useDispatch()
-  const location = useLocation()
   const navigate = useNavigate()
-  const Data = location.state.cart;
-  const [Filter, setFilter] = useState(Data)
   const [subTotal, setSubTotal] = useState(0)
   const [total, setTotal] = useState(0)
   const [GST, setGST] = useState(0)
 
   const cartData = useSelector(state => state.cart);
-  const restId = location.state.restId;
+  const restId = useSelector(state => state.restId);;
 
  useEffect(()=>{
   Billtotal()
  })
   const Billtotal = () => {
     const arr2 = [];
-    cartData.map((ele) => {
+    cartData.forEach((ele) => {
       const arr = ele.price * ele.quantity;
       const arr1 = Number(arr);
-      arr2.push(arr1)
-    })
+      arr2.push(arr1);
+    });
     console.log(arr2)
     var total1 = 0;
     for (let i = 0; i < arr2.length; i++) {
@@ -70,6 +67,7 @@ const Cart = (props) => {
     <>
       <MainNavbar ></MainNavbar>
       <section className='cart-container'>
+        <h2 className='menu-title h1-container'>Review Order</h2> <br />
         <table>
           <tr>
             <th >Remove</th>
@@ -123,7 +121,7 @@ const Cart = (props) => {
           <button className='cart-btn' onClick={onPayment}>Place Order</button>
         </table>
       </section>
-
+<Footer/>
     </>
 
   )

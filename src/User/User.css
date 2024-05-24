@@ -67,17 +67,33 @@ p{
     margin-left: 10%;
     margin-top: 5%;
 }
+.title-log{
+    margin-left: 35% ;
+    
+}
+.manudata-main{
+    min-height: 100vh;
+}
+@media screen  and (max-width:900px){
+.main{
+    width: 60%;
+    margin-left: 35%;
+}
+.title-log{
+    margin-left: 0px;
+}
+}
 @media screen  and (max-width:500px) {
-
+    .title-log{
+        margin-left: 0;
+    }
     .cont .title{
-        font-size: 10vw;
+        font-size: 15vw;
     }
     .sub-title{
         font-size: 3vw;
     }
-    .title-log{
-        margin-left: 20% !important;
-    }
+
     .main{
         margin-left: 5%;
         width: 90%;

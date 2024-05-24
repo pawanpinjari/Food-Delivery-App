@@ -17,11 +17,12 @@ const Print = React.forwardRef((props, ref) => {
       setData(BillData);
   
       const arr2 = [];
-      BillData.cart_data.map((ele) => {
+      BillData.cart_data.forEach((ele) => {
         const arr = ele.price * ele.quantity;
         const arr1 = Number(arr);
         arr2.push(arr1);
       });
+      
   
       var total1 = 0;
       for (let i = 0; i < arr2.length; i++) {
@@ -30,7 +31,6 @@ const Print = React.forwardRef((props, ref) => {
   
       setSubTotal(total1);
       const gst = (total1 * 18) / 100;
-      const totalAmount = total1 + gst;
 
       setGST(gst);
      
@@ -49,9 +49,7 @@ const Print = React.forwardRef((props, ref) => {
   if (!data || !data.bill_address) {
     return <p>Loading...</p>;
   }
-  
-  console.log("GST",GST)
-  console.log("subtotal",subTotal)
+ 
   const orderDate = new Date(data.bill_address.orderDate);
   return (
     <div className="print-data" ref={printRef}>
