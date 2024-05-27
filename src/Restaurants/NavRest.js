@@ -30,7 +30,7 @@ const NavRest = (props) => {
     <>
       <nav className='nav-main'>
         <HiOutlineMenu className='menu-icon ' onClick={toggleMenu} />
-        <li onClick={() => props.Nav_Content("rec_order")}>Recived Order</li>
+        <li onClick={() => props.Nav_Content("rec_order")}>Received Order</li>
         <li onClick={() => props.Nav_Content("confirm-order")}>Confirm Order</li>
         <li onClick={() => props.Nav_Content("cancel-order")}>Cancel Order</li>
         <li onClick={() => props.Nav_Content("add")}>Add Menu</li>

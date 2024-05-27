@@ -92,9 +92,9 @@ select option{
     height: 100%;
     z-index: 25;
     color: white;
-    right: 5px;
+    right: 0px;
     scroll-behavior: smooth;
-    background-color: black;
+    background-color: #111;
     animation-name: increase;
     animation-duration: 1s;
     top: 0;
@@ -107,16 +107,8 @@ select option{
          width: 30%;
     }
 }
-.profile-data div{
-    position: fixed;
-    width: 30%;
-    /* height: 100vh; */
-    background-color: black;
-   padding-left: 10px;
-}
-.user-data text{
-    margin-left: 5%;
-}
+
+
 .icon{
     width: 40px;
     height: 40px;
@@ -130,31 +122,41 @@ select option{
     
 }
 
-.user-data{
-    margin: 20px 50px;
-    color: white;
-    font-size: 20px;
-    font-size: 20px;
- 
- }
+.or-title{
+ font-weight: bold;
+ color: white;
+ font-size: 1.3rem;
+ border-bottom: 1px solid white;
+ padding-left: 3%;
+}
 
- .edit{
-    display: inline-block;
-    margin-left: 33%;
-   
-    border-bottom: 1px solid white;
+.edit{
+     text-align: center;
+     font-weight: bold;
+    color: white;
  }
  .edit:hover{
     cursor: pointer;
+    color: green;
  }
 .profile-image{
     width: 150px;
     height: 150px;
    border-radius: 50%;
-   /* margin-left: 25%; */
-  
-}
 
+}
+.cont-image{
+    width: 100%;
+    text-align: center;
+    background-color: none;
+}
+.name-box{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    
+}
  .button{
     margin-top: 20%;
     margin-left: 25%;
@@ -168,10 +170,7 @@ select option{
     border-radius: 10px;
 }
 
-.first-span{
-    color: yellow;
-    font-weight: bold;
-}
+
 
 .button-logout{
     margin-top: 10%;
@@ -188,6 +187,38 @@ select option{
 .editable{
     margin-top: 5%;
     padding: 2%;
+}
+.profile-order{
+    width: 90%;
+   font-weight: bold;
+    margin-left: 5%;
+color: black;
+background-color: black;
+padding: 2%;
+}
+.order-data{
+    display: grid;
+    grid-template-columns: 40% 30% 30%;
+   margin: 2.5%;
+    height: 30px;
+    align-items: center;
+    background-color: rgb(175, 202, 225);
+}
+.order-data div{
+    padding: 5%;
+}
+.btn-box{
+    margin-top: 5%;
+    width: 100%;
+     text-align: center;
+}
+.button-order{
+color: white;
+width: 50%;
+height: 50px;
+font-size: 2rem;
+font-weight: bold;
+background-color: red;
 }
 @media screen and (max-width:900px){
     .nav-main{
@@ -213,9 +244,7 @@ select option{
              width: 50%;
         }
     }
-    .profile-data div{
-        width: 50%;
-    }
+
 }
 @media screen and (max-width:500px){
     .nav-main{

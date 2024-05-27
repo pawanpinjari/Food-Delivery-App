@@ -38,46 +38,69 @@ const Profile = () => {
             {loginStatus ? (
                 Array.isArray(userData) && userData.length > 0 ? (
                     userData.map((e) => (
-                        <text key={e.email} >
-                            <text key={e.email} className='user-data'>
-                                {
+                        <div key={e.email}>
+                            <div className='cont-image'>
+                            {
                                     image ? (
-                                        <text>
+                                        <div>
                                             <img src={image} className='profile-image' alt="data" /> <br />
 
-                                        </text>
+                                        </div>
 
                                     ) : (
-                                        <text>
+                                        <div>
                                             <img src="./owner/profile.png" alt='data' className='profile-image' /> <br />
 
-                                        </text>
+                                        </div>
                                     )
 
                                 }
-                                <text >
-                                </text> <br />
-                                <text>
-                                    <span className='first-span'>Name: </span>
-                                    <span>{e.name}</span>
-                                </text><br />
-                                <text>
-                                    <span className='first-span'>Email: </span>
-                                    <span>{e.email}</span>
-                                </text><br />
-                                <text>
-                                    <span className='first-span'>Mobile: </span>
-                                    <span>{e.mobile}</span>
-                                </text> <br />
-                                <text>
-                                    <span className='first-span'>Address: </span>
-                                    <span>{e.address}</span>
-                                    <span>{e.addr}</span>
-                                </text> <br />
+                           
+                            </div>
+                            <div className='name-box'>
+                                    {e.name}
+                            </div>
+                        </div>
+                        // <text key={e.email} >
+                        //     <text key={e.email} className='user-data'>
+                                // {
+                                //     image ? (
+                                //         <text>
+                                //             <img src={image} className='profile-image' alt="data" /> <br />
+
+                                //         </text>
+
+                                //     ) : (
+                                //         <text>
+                                //             <img src="./owner/profile.png" alt='data' className='profile-image' /> <br />
+
+                                //         </text>
+                                //     )
+
+                                // }
+                        //         <text >
+                        //         </text> <br />
+                        //         <text>
+                        //             <span className='first-span'>Name: </span>
+                        //             <span>{e.name}</span>
+                        //         </text><br />
+                        //         <text>
+                        //             <span className='first-span'>Email: </span>
+                        //             <span>{e.email}</span>
+                        //         </text><br />
+                        //         <text>
+                        //             <span className='first-span'>Mobile: </span>
+                        //             <span>{e.mobile}</span>
+                        //         </text> <br />
+                        //         <text>
+                        //             <span className='first-span'>Address: </span>
+                        //             <span>{e.address}</span>
+                        //             <span>{e.addr}</span>
+                        //         </text> <br />
                                
-                                <button className='button-logout' onClick={logout}>Logout</button>
-                            </text>
-                        </text>
+                        //         <button className='button-logout' onClick={logout}>Logout</button>
+                        //     </text>
+                        // </text>
 
                     ))
                 ) : (

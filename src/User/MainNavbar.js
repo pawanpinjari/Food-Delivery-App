@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { HiX } from 'react-icons/hi';
 import './MainNavbar.css';
 import axios from "axios"
 import Profile from '../Components/Profile';
 import { BsFillCartPlusFill } from 'react-icons/bs';
+import { setUser, setToken, setLoginStatus, deleteAll, setRest } from '../Redux/Actions/index';
 
-const MainNavbar = (props ) => {
+const MainNavbar = (props) => {
+  const dispatch = useDispatch()
   const history = useNavigate();
   const navigate = useNavigate();
   const userData = useSelector(state => state.user);
+  const token = useSelector(state => state.token);
   const loginStatus = useSelector(state => state.isLoggedIn);
   const restId = useSelector(state => state.restId);
   const [profileEdit, setProfileEdit] = useState(false);
@@ -19,90 +22,117 @@ const MainNavbar = (props ) => {
   const [email, setEmail] = useState("");
   const [addr, setAddr] = useState("");
   const [image, setImage] = useState("");
+  const [orderData, setOrderData] = useState("");
 
 
   useEffect(() => {
 
     if (Array.isArray(userData)) {
-      const images = [];
-      const emails = [];
-    
       userData.forEach((e) => {
-        images.push(e.image);
-        emails.push(e.email);
+        setImage(e.image);
+        setEmail(e.email);
       });
-    
-      setImage(images);
-      setEmail(emails);
     }
-    
+    else {
+      setImage("");
+    }
+    if (loginStatus) {
+
+      userOrder()
+    }
+
   }, [userData]);
+  const userOrder = async () => {
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/userOrder`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setOrderData(res.data)
+    } catch (error) {
+      alert("Something went wrong: " + error.message);
+    }
+  }
+  console.log(orderData)
 
   const profile = () => {
     setView(true);
 
-
   };
-  const profile_edit=()=>{
+  const profile_edit = () => {
     setProfileEdit(true)
-   
+
   }
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
-      
+
     };
     reader.readAsDataURL(file);
   };
 
 
-  async function submit(e){
+  async function submit(e) {
     e.preventDefault();
-    console.log(userData)
-    const formData = new FormData();
-    formData.append('image', image);
-     formData.append('email', email);
-     formData.append('addr', addr);
-     console.log("formData",formData)
-    try{
 
-        await axios.post(`${process.env.REACT_APP_API_URL}/user_update`,{
-          image,email,addr
-        })
-        .then(res=>{
-            if(res.data==="exist"){
-              alert("User have not sign up")
-            }
-            else if(res.data){
-              history("/",{state:res.data}) 
-            }
-        })
-        .catch(e=>{
+    try {
+
+      await axios.post(`${process.env.REACT_APP_API_URL}/user_update`, {
+        image, email, addr
+      })
+        .then(res => {
+          alert(res.data)
+          if (res.data === "exist") {
+            alert("update sucessful")
+            setProfileEdit(false)
+          }
+          else if (res.data === "no changes") {
+            alert("no changes")
+            setProfileEdit(false)
+          }
+          else {
             alert("wrong details")
-            console.log(e);
+          }
+        })
+        .catch(e => {
+          alert("wrong details")
+          console.log(e);
         })
 
     }
-    catch(e){
-        console.log(e);
+    catch (e) {
+      console.log(e);
 
     }
-    
-}
- const Cart =()=>{
 
-  const state = {
-    restId: restId,
-};
-if (loginStatus === true) {
-  navigate('/cart', { state: state });
-} else {
-  
-  navigate('/login', { state:  { from: "cart" } });
-}
- }
+  }
+  const Cart = () => {
+
+    const state = {
+      restId: restId,
+    };
+    if (loginStatus === true) {
+      navigate('/cart', { state: state });
+    } else {
+
+      navigate('/login', { state: { from: "cart" } });
+    }
+  }
+
+  const logout = () => {
+    dispatch(setUser(null));
+    dispatch(setToken(null));
+    dispatch(setLoginStatus(false));
+    dispatch(deleteAll());
+    dispatch(setRest(null));
+    setImage("")
+    setOrderData("")
+    history("/")
+  }
+
   return (
     <>
       <nav className="nav-main">
@@ -117,108 +147,66 @@ if (loginStatus === true) {
           <div className='nav-cart'>
             {
               props.cart &&
-            <li onClick={Cart} className='cart-li'><BsFillCartPlusFill /></li>
+              <li onClick={Cart} className='cart-li'><BsFillCartPlusFill /></li>
             }
           </div>
           <div>
             <div className="user">
-           
-              
               {
-                image ? (
-                  <img src={image} onClick={profile} alt="profile" className='icon' />
-
-                ) : (
+                image ?
+                  <img src={`${image}`} onClick={profile} alt="" className='icon' />
+                  :
                   <img src="./owner/profile.png" alt='icon' onClick={profile} className='icon' />
-
-                )
-
               }
             </div>
           </div>
         </div>
       </nav>
       {view && (
-        
 
         <div className="profile-data">
           <HiX className="icon x" onClick={() => setView(false)} /> <br />
           {
             loginStatus &&
-            <h5 onClick={() => { profile_edit(); }} className='edit'>edit profile</h5>
-          }
-          <Profile></Profile>
-
-          {/* {loginStatus ? (
-            Array.isArray(userData) && userData.length > 0 ? (
-              userData.map((e) => (
-                <div>
-                  <div key={e._id} className='user-data'>
-                    {
-                      image ? (
-                        <text>
-                          <img src={`./images/${image}`} className='profile-image' alt="data" /> <br />
-                          <a5 className='edit'></a5>
-                        </text>
-
-                      ) : (
-                        <text>
-                          <img src="./owner/profile.png" alt='data' className='profile-image' /> <br />
-                          <h5 onClick={() => { profile_edit(e.email); }} className='edit'>edit profile</h5>
-                        </text>
-                      )
-
-                    }
-                    <text >
-                    </text> <br />
-                    <text>
-                      <span className='first-span'>Name: </span>
-                      <span>{e.name}</span>
-                    </text><br />
-                    <text>
-                      <span className='first-span'>Email: </span>
-                      <span>{e.email}</span>
-                    </text><br />
-                    <text>
-                      <span className='first-span'>Mobile: </span>
-                      <span>{e.mobile}</span>
-                    </text> <br />
-                    {
-                      e.address && <text>
-                        <span className='first-span'>Address:</span>
-                        <span>{e.address}</span> <br />
-                      </text>
-                    }
-                    <button className='button-logout' onClick={logout}>Logout</button>
-                  </div>
-                </div>
-
-              ))
-            ) : (
-              <div >
-                <div>
-                  <div>
-                    <p>something went wrong please try again</p>
-                    <button className='button' onClick={() => navigate("/login")}>User Login</button>
-                    <button className='button' style={{ height: "auto" }} onClick={() => navigate("/rest_login")}>Restaurant Login</button>
-                    <button className='button' onClick={() => navigate("/signup")}>Admin</button>
-                  </div>
-                </div>
-              </div>
-            )
-          ) : (
             <div >
-              <div >
-                <div>
-                  <button className='button' onClick={() => navigate("/login")}>User Login</button>
-                  <button className='button' style={{ height: "auto" }} onClick={() => navigate("/rest_login")}>Restaurant Login</button>
-                  <button className='button' onClick={() => navigate("/admin-login")}>Admin</button>
+
+              <h5 onClick={() => { profile_edit(); }} className='edit'>Update profile</h5>
+            </div>
+          }
+          <div>
+            <Profile></Profile>
+          </div>
+          <div>
+            {
+              orderData &&
+              <div className='profile-order'>
+                <div className='or-title'>Recent Order</div>
+                <div >
+                  <div className='order-data'>
+                    <div>Restaurant</div>
+                    <div>Price</div>
+                    <div>Status</div>
+                  </div>
+                  {orderData && orderData.map((e, index) => (
+                    <div key={index} className='order-data'>
+                      <div> {e.restname}</div>
+                      <div> {e.price}</div>
+                      <div> {e.status}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className='btn-box'>
+
+                  <button className='button-order' onClick={logout}>Logout</button>
                 </div>
               </div>
-            </div>
-          )} */}
+            }
+
+          </div>
+
         </div>
       )}
+
       {
         profileEdit && <div className="profile-data">
           <HiX className="icon x" onClick={() => setProfileEdit(false)} /> <br />
@@ -226,13 +214,13 @@ if (loginStatus === true) {
 
             <div className='editable'>
               <form >
-                <text><h4 className='first-span'>profile image</h4>
+                <text><h4 className='first-span'>Profile Image</h4>
                   <input type="file" name="" id="" onChange={handleImageChange} />
                 </text>
                 <text><h4 className='first-span'>Address</h4>
                   <input type="text" onChange={(e) => { setAddr(e.target.value) }} name="" id="" />
                 </text>
-                <button className='button' onClick={submit}>Submit</button>
+                <button className='button' onClick={submit}>Update</button>
               </form>
             </div>
 

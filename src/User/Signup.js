@@ -61,7 +61,7 @@ const Signup = () => {
                   
                     <input type="text" className="box" id="phno" placeholder="Mobile"  onChange={(e)=>{setMobile(e.target.value)}}/>
                    
-                    <input type="text" className="box" id="password" placeholder="Password"  onChange={(e)=>{setPass(e.target.value)}}/> 
+                    <input type="password" className="box" id="password" placeholder="Password"  onChange={(e)=>{setPass(e.target.value)}}/> 
                     
                    
                     <input type="submit" value="Register" id="submit" onClick={submit}/> <br />

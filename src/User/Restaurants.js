@@ -39,7 +39,6 @@ const Restaurants = ({ menuData}) => {
                             <div key={i} onClick={() => { onAlert(_id) }}>
                                 <div className='card1 ' >
                                     <div >
-                                        {/* <img src= {image} alt="images" className='card-media' /> */}
                                         <img src={`${image}`} alt="images" className='card-media' />
                                     </div>
                                     <div className='card-body'>

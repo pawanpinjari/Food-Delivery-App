@@ -123,9 +123,14 @@ app.post("/user_update", async (req, res) => {
     const updateData = { $set: data };
     try {
         const check = await user.findOne({ email: email })
-      
         if (check) {
             const insert = await user.updateOne(query, updateData, { upsert: true })
+            if (insert.modifiedCount > 0 || insert.upsertedCount > 0) {
+                res.json("exist");
+            } else {
+                res.json("no changes");
+            }
+            
         }
         else {
             res.json(data)
@@ -328,6 +333,37 @@ app.post("/order", userAuth, async (req, res) => {
         res.json("Internal Server Error");
     }
 });
+
+
+app.post("/userOrder", userAuth, async (req, res) => {
+    const userID = req.user._id;
+    console.log("userId", userID);
+
+    try {
+        const orders = await order.find({ custId: userID }).sort({ "payment.orderDate": -1 }).lean();
+
+        if (orders.length === 0) {
+            return res.json("No Data");
+        }
+
+        const data = await Promise.all(
+            orders.map(async (order) => {
+                const restaurant = await rest.findById(order.restId).lean(); 
+                return {
+                    restname: restaurant ? restaurant.name : "Unknown",
+                    price: order.payment.total,
+                    status: order.status
+                };
+            })
+        );
+        console.log(data)
+        res.json(data);
+    } catch (error) {
+        res.status(500).json("Server Error");
+    }
+});
+
+
 
 app.post("/orderpayment", async (req, res) => {
     try {

@@ -90,7 +90,7 @@ const RecOrder = (props) => {
     <>
       <div className='order-container'>
         <div className='cont-rec'>
-          <h3 className='main-title'>All Orders</h3>
+          <h3 className='main-title'>All Pending Orders</h3>
           {Array.isArray(data) && data.length > 0 ? (
             data.map((e, i) => (
               <div key={i}>

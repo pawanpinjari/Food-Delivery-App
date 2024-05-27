@@ -4,12 +4,11 @@ const newSchema1=new mongoose.Schema({
 
     image:{
         type:String
-        // type:String,
-        // required:true
+
     },
     address:{
         type:String
-        // required:true
+       
     }
 })
 
