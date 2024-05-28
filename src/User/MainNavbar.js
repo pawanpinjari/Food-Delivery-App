@@ -37,24 +37,36 @@ const MainNavbar = (props) => {
       setImage("");
     }
     if (loginStatus) {
-
-      userOrder()
-    }
-
-  }, [userData]);
-  const userOrder = async () => {
-    try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/userOrder`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const userOrder = async () => {
+        try {
+          const res = await axios.post(`${process.env.REACT_APP_API_URL}/userOrder`, {}, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setOrderData(res.data)
+        } catch (error) {
+          alert("Something went wrong: " + error.message);
         }
-      });
-      setOrderData(res.data)
-    } catch (error) {
-      alert("Something went wrong: " + error.message);
+      }
+      userOrder();
     }
-  }
-  console.log(orderData)
+
+  },  [userData, loginStatus,token]);
+
+  // const userOrder = async () => {
+  //   try {
+  //     const res = await axios.post(`${process.env.REACT_APP_API_URL}/userOrder`, {}, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     setOrderData(res.data)
+  //   } catch (error) {
+  //     alert("Something went wrong: " + error.message);
+  //   }
+  // }
+
 
   const profile = () => {
     setView(true);

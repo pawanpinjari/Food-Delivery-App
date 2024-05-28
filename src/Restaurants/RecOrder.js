@@ -5,7 +5,6 @@ import { BiSolidPhoneCall } from 'react-icons/bi';
 import { FaLocationDot, FaIndianRupeeSign } from 'react-icons/fa6';
 import { HiX } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
 import Loading from '../Components/Loading';
 
 const RecOrder = (props) => {

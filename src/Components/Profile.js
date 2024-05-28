@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser, setToken, setLoginStatus,deleteAll,setRest } from '../Redux/Actions/index';
 
 const Profile = () => {
-    const dispatch = useDispatch()
-    const history = useNavigate();
+  
     const navigate = useNavigate();
 
     const userData = useSelector(state => state.user);
@@ -22,16 +20,6 @@ const Profile = () => {
     }, [userData]);
 
 
-
-    const logout = () => {
-        dispatch(setUser(null));
-        dispatch(setToken(null));
-        dispatch(setLoginStatus(false));
-        dispatch(deleteAll());
-        dispatch(setRest(null));
-        setImage("")
-        history("/")
-    }
 
     return (
         <div >
@@ -61,46 +49,7 @@ const Profile = () => {
                                     {e.name}
                             </div>
                         </div>
-                        // <text key={e.email} >
-                        //     <text key={e.email} className='user-data'>
-                                // {
-                                //     image ? (
-                                //         <text>
-                                //             <img src={image} className='profile-image' alt="data" /> <br />
-
-                                //         </text>
-
-                                //     ) : (
-                                //         <text>
-                                //             <img src="./owner/profile.png" alt='data' className='profile-image' /> <br />
-
-                                //         </text>
-                                //     )
-
-                                // }
-                        //         <text >
-                        //         </text> <br />
-                        //         <text>
-                        //             <span className='first-span'>Name: </span>
-                        //             <span>{e.name}</span>
-                        //         </text><br />
-                        //         <text>
-                        //             <span className='first-span'>Email: </span>
-                        //             <span>{e.email}</span>
-                        //         </text><br />
-                        //         <text>
-                        //             <span className='first-span'>Mobile: </span>
-                        //             <span>{e.mobile}</span>
-                        //         </text> <br />
-                        //         <text>
-                        //             <span className='first-span'>Address: </span>
-                        //             <span>{e.address}</span>
-                        //             <span>{e.addr}</span>
-                        //         </text> <br />
-                               
-                        //         <button className='button-logout' onClick={logout}>Logout</button>
-                        //     </text>
-                        // </text>
+   
 
                     ))
                 ) : (
