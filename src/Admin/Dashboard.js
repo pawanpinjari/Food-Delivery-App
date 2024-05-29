@@ -13,7 +13,7 @@ const Dashboard = (props) => {
     }
     
   });
-  console.log(props.data)
+
   let result = Math.floor(totalPayment);
   setTotal(result)
 };

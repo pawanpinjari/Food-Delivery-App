@@ -266,7 +266,7 @@ app.post("/allfood", restAuth, async (req, res) => {
             res.json("notexist");
         }
     } catch (error) {
-        console.error("Error:", error);
+        
         res.json("Internal Server Error");
     }
 });
@@ -283,7 +283,7 @@ app.post("/allItem", async (req, res) => {
             res.json("notexist");
         }
     } catch (error) {
-        console.error("Error:", error);
+       
         res.json("Internal Server Error");
     }
 });
@@ -337,7 +337,7 @@ app.post("/order", userAuth, async (req, res) => {
 
 app.post("/userOrder", userAuth, async (req, res) => {
     const userID = req.user._id;
-    console.log("userId", userID);
+  
 
     try {
         const orders = await order.find({ custId: userID }).sort({ "payment.orderDate": -1 }).lean();
@@ -356,7 +356,7 @@ app.post("/userOrder", userAuth, async (req, res) => {
                 };
             })
         );
-        console.log(data)
+      
         res.json(data);
     } catch (error) {
         res.status(500).json("Server Error");
@@ -467,7 +467,7 @@ app.post("/admin",async(req,res)=>{
             cancelledOrders: cancelledOrders
         });
     } catch (error) {
-        console.error("Error:", error);
+        
         res.status(500).json("Internal Server Error");
     }
 })

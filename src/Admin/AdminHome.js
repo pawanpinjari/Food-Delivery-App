@@ -23,7 +23,7 @@ const AdminHome = () => {
         if (response.data) {
           setData(response.data);
         } else {
-          console.log("data not found");
+          alert("data not found");
         }
       } catch (error) {
         alert("Something went wrong while fetching admin data");

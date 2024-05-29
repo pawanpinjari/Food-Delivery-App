@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 
 const Barchart = ({ ConfOrder: { ConfOrder } }) => { 
   const chartRef = useRef();
-  console.log("barchart", ConfOrder);
+
   
 
 useEffect(() => {

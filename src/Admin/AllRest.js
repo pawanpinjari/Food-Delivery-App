@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 
 const AllRest = ({ RestData }) => {
-  console.log("RestData",RestData)
+
   return (
     <React.Fragment>
       <div className='order-container'>

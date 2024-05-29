@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 
 
 const Confirm = ({ ConfOrder }) => {
-  console.log(ConfOrder)
+
 
   return (
     <React.Fragment>
