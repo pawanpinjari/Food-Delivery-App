@@ -63,16 +63,16 @@ const HotelSignup = () => {
             <div className='rest-main'>
                 <form action="POST">
                   <div>
-                  <input type="text" className="box" id="name" placeholder="Restaurant Name" onChange={(e)=>{setName(e.target.value)}}/>
-                  <input type="text" className='box' value={email} onChange= {(e) => { setEmail(e.target.value) }} placeholder="Owner Email"  />
-                  <input type="text" className="box" id="phno" placeholder="Onwer Mobile"  onChange={(e)=>{setMobile(e.target.value)}}/>
+                  <input type="text" className="box" id="name" placeholder="Restaurant Name" onChange={(e)=>{setName(e.target.value)}}  required/>
+                  <input type="text" className='box' value={email} onChange= {(e) => { setEmail(e.target.value) }} placeholder="Owner Email" required />
+                  <input type="text" className="box" id="phno" placeholder="Onwer Mobile"  onChange={(e)=>{setMobile(e.target.value)}} required/>
                  
-                  <input type="text" className="box" id="addr" placeholder="Restaurant Address"  onChange={(e)=>{setAddr(e.target.value)}}/>
-                  <input type="text" className="box" id="city" placeholder="City"  onChange={(e)=>{setCity(e.target.value)}}/>
-                    <input type="text" className="box" id="password" placeholder=" Set Password"  onChange={(e)=>{setPass(e.target.value)}}/> 
-                    <input type="text" className="box" id="desc" placeholder=" Add few word for our resto"  onChange={(e)=>{setDesc(e.target.value)}}/>
+                  <input type="text" className="box" id="addr" placeholder="Restaurant Address"  onChange={(e)=>{setAddr(e.target.value)}} required/>
+                  <input type="text" className="box" id="city" placeholder="City"  onChange={(e)=>{setCity(e.target.value)}} required/>
+                    <input type="text" className="box" id="password" placeholder=" Set Password"  onChange={(e)=>{setPass(e.target.value)}} required/> 
+                    <input type="text" className="box" id="desc" placeholder=" Add few word for our resto"  onChange={(e)=>{setDesc(e.target.value)}} required/>
                     <div>
-                    <input type="file" name="" id="file" title='choose food image' onChange={handleImageChange}/> 
+                    <input type="file" name="" id="file" title='choose food image' onChange={handleImageChange} required/> 
                     <label htmlFor="file"><AiFillFileImage />Add Resto Poster</label>
                     </div>
                    

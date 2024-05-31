@@ -1,7 +1,7 @@
 import React from 'react'
 import Barchart from './Barchart'
 
-const Earings = (ConfOrder) => {
+const Earning = (ConfOrder) => {
   return (
     <div className='earing'>
       <Barchart ConfOrder={ConfOrder}/>
@@ -9,4 +9,4 @@ const Earings = (ConfOrder) => {
   )
 }
 
-export default Earings
+export default Earning

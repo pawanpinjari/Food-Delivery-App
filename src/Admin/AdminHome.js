@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Adminnav from './Adminnav';
 import Dashboard from './Dashboard';
 import Users from './Users';
-import Earings from './Earings';
+import Earning from './Earning';
 import Received from './Received';
 import Confirm from './Confirm';
 import Cancelled from './Cancelled';
@@ -56,7 +56,7 @@ const AdminHome = () => {
             loading ?  (<div className='admin-loading'><Loading/></div> ):
           data ?( navCon === "users" ? (<Users UserData={data.users} />) :
               navCon === "restaurants" ? (<AllRest RestData={data.restaurants} />) :
-                navCon === "earnings" ? (<Earings ConfOrder={data.confirmedOrders} />) :
+                navCon === "earnings" ? (<Earning ConfOrder={data.confirmedOrders} />) :
                   navCon === "received" ? (<Received RecOrder={data.receivedOrders} />) :
                     navCon === "confirm" ? (<Confirm ConfOrder={data.confirmedOrders} />) :
                       navCon === "cancelled" ? (<Cancelled ConcOrder={data.cancelledOrders} />) : 

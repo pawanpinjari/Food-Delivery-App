@@ -44,7 +44,8 @@ const MainNavbar = (props) => {
               Authorization: `Bearer ${token}`
             }
           });
-          setOrderData(res.data)
+          const dataslice=res.data.slice(0,5)
+          setOrderData(dataslice)
         } catch (error) {
           alert("Something went wrong: " + error.message);
         }
@@ -54,18 +55,7 @@ const MainNavbar = (props) => {
 
   },  [userData, loginStatus,token]);
 
-  // const userOrder = async () => {
-  //   try {
-  //     const res = await axios.post(`${process.env.REACT_APP_API_URL}/userOrder`, {}, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //     setOrderData(res.data)
-  //   } catch (error) {
-  //     alert("Something went wrong: " + error.message);
-  //   }
-  // }
+  
 
 
   const profile = () => {
