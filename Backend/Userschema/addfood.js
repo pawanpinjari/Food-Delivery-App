@@ -2,26 +2,32 @@ const mongoose = require("../config.js")
 
 const newSchema1=new mongoose.Schema({
     restId:{
-        type:String
+        type:String,
+        required:true
     },
     image:{
-        type:String
+        type:String,
+       required:true
         
     },
     name:{
-        type:String
+        type:String,
+        required:true
        
     },
     category:{
-        type:String
+        type:String,
+        required:true
        
     },
     price:{
-        type:String
+        type:String,
+        required:true
          
     },
     description:{
-        type:String
+        type:String,
+        required:true
     }
    
     

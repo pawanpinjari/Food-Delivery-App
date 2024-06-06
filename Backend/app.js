@@ -11,7 +11,6 @@ const addfood = require("./Userschema/addfood")
 const order = require("./Userschema/order")
 require('dotenv').config();
 const cors = require("cors");
-const update = require("./Userschema/user_update");
 const { ObjectId } = require("mongodb");
 const auth = require("./Middlwares/userAuth");
 const restAuth = require("./Middlwares/restAuth");
