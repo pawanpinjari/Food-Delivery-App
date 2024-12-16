@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setUser, setToken, setLoginStatus, deleteAll, setRest } from '../Redux/Actions/index';
 
 const Profile = () => {
   
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const userData = useSelector(state => state.user);
     const loginStatus = useSelector(state => state.isLoggedIn);
 
@@ -19,7 +20,15 @@ const Profile = () => {
         }
     }, [userData]);
 
-
+    const logout = () => {
+        dispatch(setUser(null));
+        dispatch(setToken(null));
+        dispatch(setLoginStatus(false));
+        dispatch(deleteAll());
+        dispatch(setRest(null));
+        setImage("");
+        navigate("/");
+      };
 
     return (
         <div >
@@ -48,8 +57,17 @@ const Profile = () => {
                             <div className='name-box'>
                                     {e.name}
                             </div>
+                            <div>
+                            {
+                                loginStatus && (
+                                    <div className='btn-box'>
+                                    <button className='button-order' onClick={logout}>Logout</button>
+                                    </div>
+                                )
+                                }
+                            </div>
                         </div>
-   
+                        
 
                     ))
                 ) : (

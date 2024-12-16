@@ -30,7 +30,7 @@ const newSchema=new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true
+        // required:true
     },
     password:{
         type:String,

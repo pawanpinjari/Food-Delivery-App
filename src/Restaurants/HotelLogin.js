@@ -10,6 +10,7 @@ const HotelLogin = () => {
     const[email,setEmail]=useState(' ');
     const[password,setPassword]=useState(' ');
     async function submit(e){
+        
         e.preventDefault();
         try{
 

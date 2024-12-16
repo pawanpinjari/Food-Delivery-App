@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const user = require("./Userschema/user")
 const bodyParser = require("body-parser");
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const rest = require("./Userschema/rest")
 const addfood = require("./Userschema/addfood")
@@ -17,7 +17,6 @@ const restAuth = require("./Middlwares/restAuth");
 const userAuth = require("./Middlwares/userAuth");
 const Razorpay = require("razorpay");
 const app = express()
-
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -33,8 +32,6 @@ app.get("/home", cors(), (req, res) => {
 })
 
 
-
-
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, '../public/images')
@@ -47,68 +44,70 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post("/login", async (req, res) => {
-    const { email, password } = req.body
-
+    const { email, password } = req.body;
 
     try {
-        const users = await user.findOne({ email: email, password: password })
+       
+        const existingUser = await user.findOne({ email: email });
 
-        if (users) {
-
-            const token = jwt.sign({
-                userId: users._id.toString()
-            }, process.env.JWT_SECRET_KEY);
-
-            res.json({ user: users, token: token });
-        }
-        else {
-            res.json("notexist")
+        if (!existingUser) {
+            return res.status(400).json({ message: "User does not exist" });
         }
 
-    }
-    catch (e) {
-        res.json("fail")
-    }
+        const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
 
-})
+        if (!isPasswordMatch) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
 
+        const token = jwt.sign(
+            { userId: existingUser._id.toString() },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: '1h' } 
+        );
+
+        return res.status(200).json({ user: existingUser, token: token });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Login failed, please try again" });
+    }
+});
 
 
 app.post("/signup", async (req, res) => {
-    const { name, email, mobile, password } = req.body
-
-    const data = {
-        name: name,
-        email: email,
-        mobile: mobile,
-        password: password
-    }
+    const { name, email, mobile, password } = req.body;
 
     try {
-        const check = await user.findOne({ email: email, password: password })
-
-        if (check) {
-            res.json("exist")
-        }
-        else {
-            const newUser = await user.create(data);
-
-            const token = jwt.sign({
-                userId: newUser._id.toString()
-            }, process.env.JWT_SECRET_KEY);
-
-            res.json({ user: newUser, token: token });
-
-
+        
+        const existingUser = await user.findOne({ email: email });
+        
+        if (existingUser) {
+            return res.json("notexist")
         }
 
-    }
-    catch (e) {
+  
+        const saltRounds = 10; 
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        res.json("please insert correct details")
-    }
+        
+        const newUser = await user.create({
+            name: name,
+            email: email,
+            mobile: mobile,
+            password: hashedPassword
+        });
+        
+        const token = jwt.sign(
+            { userId: newUser._id.toString() },
+            process.env.JWT_SECRET_KEY
+        );
 
-})
+        return res.status(201).json({ user: newUser, token: token });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: "Error signing up. Please try again." });
+    }
+});
 
 app.post("/user_update", async (req, res) => {
     const { email, addr,image } = req.body
@@ -125,103 +124,117 @@ app.post("/user_update", async (req, res) => {
         if (check) {
             const insert = await user.updateOne(query, updateData, { upsert: true })
             if (insert.modifiedCount > 0 || insert.upsertedCount > 0) {
-                res.json("exist");
+                return res.json("exist");
             } else {
-                res.json("no changes");
+                return res.json("no changes");
             }
             
         }
         else {
-            res.json(data)
+            return res.json(data)
 
         }
 
     }
     catch (e) {
         
-        res.json("please insert correct details")
+        return res.json("please insert correct details")
     }
 
 })
-
 
 app.post("/home", async (req, res) => {
     try {
         const data1 = await rest.find()
         if (data1) {
 
-            res.json(data1)
+            return res.json(data1)
         }
         else {
-            res.json("notexist")
+            return res.json("notexist")
         }
     }
     catch (e) {
-      
+        return res.json("please insert correct details")
     }
 
 })
-
-
 
 app.post("/rest_login", async (req, res) => {
-    const { email, password } = req.body
-
+    const { email, password } = req.body;
 
     try {
-        const check = await rest.findOne({ email: email, password: password })
-       
-        if (check) {
-            const token = jwt.sign({
-                _Id: check._id.toString()
-            }, process.env.JWT_SECRET_KEY);
 
-            res.json({ user: check, token: token })
-        }
-        else {
-            res.json("notexist")
+        const user = await rest.findOne({ email: email });
+        
+        if (!user) {
+            return res.json("exist");
         }
 
-    }
-    catch (e) {
-        res.json("fail")
-    }
+        const isMatch = await bcrypt.compare(password, user.password);
+        
+        if (!isMatch) {
+            return res.json("notexist");
+        }
 
-})
+        const token = jwt.sign(
+            { userId: user._id.toString() },
+            process.env.JWT_SECRET_KEY
+        );
 
+        const userWithoutPassword = user.toObject();
+        delete userWithoutPassword.password;
+
+        return res.status(200).json({ user: userWithoutPassword, token: token });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: "Login failed. Please try again." });
+    }
+});
 
 
 app.post("/rest_signup", async (req, res) => {
-    const { name, addr, city, email, mobile, desc, image, password } = req.body
-
-    const data1 = {
-        name: name,
-        addr: addr,
-        email: email,
-        mobile: mobile,
-        city: city,
-        desc: desc,
-        image: image,
-        password: password
-    }
+    const { name, addr, city, email, mobile, desc, image, password } = req.body;
 
     try {
-        const check = await rest.findOne({ name: name })
+
+        const check = await rest.findOne({  email: email });
 
         if (check) {
-            res.json("exist")
-        }
-        else {
-            res.json("notexist")
-            await rest.insertMany([data1])
+            return res.json("exist")
         }
 
-    }
-    catch (e) {
-        res.json("please insert correct details")
-    }
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-})
+        const newUser = await rest.create({
+            name: name,
+            addr: addr,
+            city: city,
+            email: email,
+            mobile: mobile,
+            desc: desc,
+            image: image,
+            password: hashedPassword
+        });
+
+ 
+        const token = jwt.sign(
+            { userId: newUser._id.toString() },
+            process.env.JWT_SECRET_KEY
+        );
+
+
+        const userWithoutPassword = newUser.toObject();
+        delete userWithoutPassword.password;
+
+        return res.status(201).json({ user: userWithoutPassword, token: token });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: "Please insert correct details" });
+    }
+});
+
 
 app.post("/add-food", restAuth, async (req, res) => {
     const { name, image, price, dec, category } = req.body
@@ -238,17 +251,17 @@ app.post("/add-food", restAuth, async (req, res) => {
         const check = await addfood.insertMany(data1)
 
         if (check) {
-            res.json("exist")
+            return res.json("exist")
         }
         else {
-            res.json("notexist")
+            return res.json("notexist")
 
         }
 
     }
     catch (e) {
 
-        res.json("please insert correct details")
+        return res.json("please insert correct details")
     }
 
 })
@@ -258,15 +271,15 @@ app.post("/allfood", restAuth, async (req, res) => {
         const check = await addfood.find({ restId: req.restId })
         if (check) {
 
-            res.json(check)
+            return res.json(check)
         }
         else {
 
-            res.json("notexist");
+            return res.json("notexist");
         }
     } catch (error) {
         
-        res.json("Internal Server Error");
+        return res.json("Internal Server Error");
     }
 });
 app.post("/allItem", async (req, res) => {
@@ -275,15 +288,15 @@ app.post("/allItem", async (req, res) => {
         const check = await addfood.find({ restId: restId })
         if (check) {
             
-            res.json(check)
+            return res.json(check)
         }
         else {
 
-            res.json("notexist");
+            return res.json("notexist");
         }
     } catch (error) {
        
-        res.json("Internal Server Error");
+        return res.json("Internal Server Error");
     }
 });
 app.post("/foodDelete", async (req, res) => {
@@ -293,14 +306,14 @@ app.post("/foodDelete", async (req, res) => {
         const check = await data.deleteOne({ id: id });
 
         if (check) {
-            res.json(check)
+            return res.json(check)
         }
         else {
-            res.json("notexist");
+            return res.json("notexist");
         }
     } catch (error) {
   
-        res.json("Internal Server Error");
+        return res.json("Internal Server Error");
     }
 });
 
@@ -321,15 +334,15 @@ app.post("/order", userAuth, async (req, res) => {
         const check = await order.insertMany([data])
 
         if (check) {
-            res.json("exist")
+            return res.json("exist")
         }
         else {
-            res.json("notexist")
+            return res.json("notexist")
 
         }
     } catch (error) {
 
-        res.json("Internal Server Error");
+        return res.json("Internal Server Error");
     }
 });
 
@@ -356,9 +369,9 @@ app.post("/userOrder", userAuth, async (req, res) => {
             })
         );
       
-        res.json(data);
+        return res.json(data);
     } catch (error) {
-        res.status(500).json("Server Error");
+        return res.status(500).json("Server Error");
     }
 });
 
@@ -381,17 +394,17 @@ app.post("/orderpayment", async (req, res) => {
       res.json(order);
     } catch (err) {
 
-      res.json("Error");
+        return res.json("Error");
     }
   });
 app.post("/rec_order", restAuth, async (req, res) => {
     const check = await order.find({ restId: req.restId , status: "pending" })
 
     if (check) {
-        res.json(check)
+        return res.json(check)
     }
     else {
-        res.json("notexist")
+        return res.json("notexist")
 
     }
 })
@@ -399,10 +412,10 @@ app.post("/confirmed-order", restAuth, async (req, res) => {
     const check = await order.find({ restId: req.restId , status: "confirm" })
 
     if (check) {
-        res.json(check)
+        return res.json(check)
     }
     else {
-        res.json("notexist")
+        return res.json("notexist")
 
     }
 })
@@ -410,10 +423,10 @@ app.post("/cancelled-order", restAuth, async (req, res) => {
     const check = await order.find({ restId: req.restId , status: "cancel" })
 
     if (check) {
-        res.json(check)
+        return res.json(check)
     }
     else {
-        res.json("notexist")
+        return res.json("notexist")
 
     }
 })
@@ -423,14 +436,14 @@ app.post("/cancel-order", async (req, res) => {
         const result = await order.updateOne({ _id: new ObjectId(orderId) }, { $set: { status: "cancel" } }, { upsert: true }, { returnDocument: 'after' });
 
         if (result.acknowledged == true) {
-            res.json("true")
+            return res.json("true")
         }
         else {
-            res.json("false")
+            return res.json("false")
         }
     }
     catch (e) {
-
+        return res.json("please insert correct details")
     }
 })
 app.post("/confirm-order", async (req, res) => {
@@ -440,14 +453,14 @@ app.post("/confirm-order", async (req, res) => {
         const result = await order.updateOne({ _id: new ObjectId(orderId) }, { $set: { status: "confirm" } }, { upsert: true }, { returnDocument: 'after' });
 
         if (result.acknowledged == true) {
-            res.json("true")
+            return res.json("true")
         }
         else {
-            res.json("false")
+            return res.json("false")
         }
     }
     catch (e) {
-
+        return res.json("please insert correct details")
     }
 })
 app.post("/admin",async(req,res)=>{
@@ -467,7 +480,7 @@ app.post("/admin",async(req,res)=>{
         });
     } catch (error) {
         
-        res.status(500).json("Internal Server Error");
+        return res.status(500).json("Internal Server Error");
     }
 })
 app.listen(8000, () => {
