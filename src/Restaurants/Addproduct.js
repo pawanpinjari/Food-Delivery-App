@@ -21,7 +21,7 @@ const Addproduct = (props) => {
         }
       });
       
-      if (res.data) {
+      if (res.data==="exist") {
         
         alert("added successfully");
       } else if (res.data === "notexist") {

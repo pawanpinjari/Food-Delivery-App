@@ -249,7 +249,7 @@ app.post("/add-food", restAuth, async (req, res) => {
 
     try {
         const check = await addfood.insertMany(data1)
-
+      
         if (check) {
             return res.json("exist")
         }
