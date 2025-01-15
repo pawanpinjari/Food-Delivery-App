@@ -154,7 +154,7 @@ const MainNavbar = (props) => {
             <Profile />
           </div>
           <div>
-            {Array.isArray(orderData) && orderData.length > 0 && (
+            {loginStatus && Array.isArray(orderData) && orderData.length > 0 && (
               <div className='profile-order'>
                 <div className='or-title'>Recent Order</div>
                 <div>
@@ -174,13 +174,13 @@ const MainNavbar = (props) => {
                
               </div>
             )}
-            {
+            {/* {
               loginStatus && (
                 <div className='btn-box'>
                   <button className='button-order' onClick={logout}>Logout</button>
                 </div>
               )
-            }
+            } */}
              
           </div>
         </div>
