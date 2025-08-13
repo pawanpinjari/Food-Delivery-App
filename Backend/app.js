@@ -483,7 +483,7 @@ app.post("/admin",async(req,res)=>{
         return res.status(500).json("Internal Server Error");
     }
 })
-app.listen(80, () => {
+app.listen(8000, "0.0.0.0",() => {
     console.log("port connected 8000");
 })
 
