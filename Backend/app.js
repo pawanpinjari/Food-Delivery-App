@@ -487,3 +487,6 @@ app.listen(8000, "0.0.0.0",() => {
     console.log("port connected 8000");
 })
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the API!");
+  });
