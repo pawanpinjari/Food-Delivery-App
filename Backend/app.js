@@ -483,9 +483,9 @@ app.post("/admin",async(req,res)=>{
         return res.status(500).json("Internal Server Error");
     }
 })
-app.listen(8000, "0.0.0.0",() => {
-    console.log("port connected 8000");
-})
+app.listen(80, '0.0.0.0', () => {
+    console.log("port connected 80");
+});
 
 app.get("/", (req, res) => {
     res.send("Welcome to the API!");
